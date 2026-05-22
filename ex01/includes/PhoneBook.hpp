@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:48:02 by root              #+#    #+#             */
-/*   Updated: 2026/05/17 16:59:47 by root             ###   ########.fr       */
+/*   Updated: 2026/05/22 11:19:55 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 
 class PhoneBook {
 	private:
-		Contact Contacts[8];
+		Contact	contacts[8];
 		int		idx;
 	public:
-		void	add_contact(Contact new_contact);
-		void	display_contact(void);
-		void	display_phonebook(void);
+		PhoneBook();
+		void	add_contact(const Contact& new_contact);
+		void	display_contact(int i) const;
+		void	display_phonebook() const;
 };
 
 #endif
