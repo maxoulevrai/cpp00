@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:02:53 by root              #+#    #+#             */
-/*   Updated: 2026/05/22 11:20:19 by root             ###   ########.fr       */
+/*   Updated: 2026/06/05 01:27:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void PhoneBook::add_contact(const Contact& new_contact) {
 	++idx;
 }
 
-void PhoneBook::display_contact(int i) const {
-	if (i < 0 || i >= 8) {
+bool PhoneBook::display_contact(int i) const {
+	if (i < 0 || i >= 8 || i > (this->idx -1) % 8) {
 		std::cout << "Invalid index" << std::endl;
-		return;
+		return false;
 	}
 	const Contact& c = contacts[i];
 	std::cout << "First name: " << c.get_first_name() << std::endl;
@@ -42,13 +42,14 @@ void PhoneBook::display_contact(int i) const {
 	std::cout << "Nickname   : " << c.get_nickname() << std::endl;
 	std::cout << "Number     : " << c.get_number() << std::endl;
 	std::cout << "Secret     : " << c.get_secret() << std::endl;
+	return true;
 }
 
-void PhoneBook::display_phonebook() const {
+bool PhoneBook::display_phonebook() const {
 	int count = idx < 8 ? idx : 8;
 	if (count == 0) {
 		std::cout << "Phonebook is empty." << std::endl;
-		return;
+		return true ;
 	}
 	std::cout << std::setw(10) << "Index" << "|"
 			  << std::setw(10) << "First name" << "|"
@@ -60,4 +61,5 @@ void PhoneBook::display_phonebook() const {
 				  << format_field(contacts[i].get_last_name()) << "|"
 				  << format_field(contacts[i].get_nickname()) << std::endl;
 	}
+	return false ;
 }
