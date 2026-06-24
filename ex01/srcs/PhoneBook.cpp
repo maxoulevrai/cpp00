@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:02:53 by root              #+#    #+#             */
-/*   Updated: 2026/06/23 23:10:59 by maleca           ###   ########.fr       */
+/*   Updated: 2026/06/24 21:41:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void PhoneBook::add_contact(const Contact& new_contact) {
 bool PhoneBook::display_contact(int i) const {
 	if (i < 0 || i >= 8 || i > (this->idx -1) % 8) {
 		std::cout << "Invalid index" << std::endl;
+		std::cin.clear();
 		return false;
 	}
 	const Contact& c = contacts[i];

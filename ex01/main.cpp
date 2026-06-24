@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:11:22 by root              #+#    #+#             */
-/*   Updated: 2026/06/24 00:17:21 by maleca           ###   ########.fr       */
+/*   Updated: 2026/06/24 21:47:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static std::string	getLine2(std::string prompt, int (*f)( int), std::string err_
 		std::cout << prompt;
 		if (!std::getline(std::cin, tmp))
 			return std::string();
-		else if (std::cin.eof()) {
-			std::cout << "eof: exiting program.";
-			exit (0);
-		}
 		trim(tmp);
 		if (tmp.empty()) {
 			std::cerr << "Error: Input cannot be empty" << std::endl;
@@ -56,31 +52,31 @@ static bool	parseContact(PhoneBook& phone) {
 	std::string tmp;
 
 	tmp = getLine2("First name: ", std::isalpha, 
-			"argument may only contain letters.");
+			ALPHA_ERR);
 	if (tmp.empty())
 		return true;
 	newContact.set_first_name(tmp);
 
 	tmp = getLine2("Last name: ", std::isalpha,
-			"argument may only contain letters.");
+			ALPHA_ERR);
 	if (tmp.empty())
 		return true;
 	newContact.set_last_name(tmp);
 
 	tmp = getLine2("Nickname: ", std::isalnum, 
-			"argument may only contain letters and numbers.");
+			ALNUM_ERR);
 	if (tmp.empty())
 		return true;
 	newContact.set_nickname(tmp);
 
 	tmp = getLine2("Number: ", std::isdigit, 
-			"argument may only contain numbers.");
+			DIGIT_ERR);
 	if (tmp.empty())
 		return true;
 	newContact.set_number(tmp);
 
 	tmp = getLine2("Secret: ", std::isalnum, 
-			"argument may only contain letters and numbers.");
+			ALNUM_ERR);
 	if (tmp.empty())
 		return true;
 	newContact.set_secret(tmp);
@@ -92,7 +88,7 @@ static bool	parseContact(PhoneBook& phone) {
 static int	parseIdx(void) {
 	while (true) {
 		std::string idxs = getLine2("Enter index to display: ", std::isdigit,  
-				"index may only take numbers as argument");
+				DIGIT_ERR);
 		if (idxs.empty()) 
 			return (-1);
 		trim(idxs);
@@ -100,7 +96,6 @@ static int	parseIdx(void) {
 		return (i);
 	}
 }
-
 
 int	main()
 {
@@ -122,21 +117,13 @@ int	main()
 			if (phone.display_phonebook() == true)
 				continue;
 			while (true) {
-			int i = parseIdx();
-			if (phone.display_contact(i) == true)
-				break ;
+				int i = parseIdx();
+				if (i < 0)
+					break ;
+				if (phone.display_contact(i) == true)
+					break ;
 			}
 		}
 	}
 	return (0);
 }
-
-	// try {
-	// 	int i = std::stoi(idxs);
-	// 	phone.display_contact(i);
-	// 	break;
-	// } catch (const std::invalid_argument&) {
-	// 	std::cout << "Invalid index" << std::endl;
-	// } catch (const std::out_of_range&) {
-	// 	std::cout << "Invalid index" << std::endl;
-	// }

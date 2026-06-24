@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:48:02 by root              #+#    #+#             */
-/*   Updated: 2026/06/23 22:05:33 by maleca           ###   ########.fr       */
+/*   Updated: 2026/06/24 21:33:01 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 #include <string>
 #include <cctype>
 #include <cstdlib>
+
+# define ALPHA_ERR "argument may only contain letters."
+# define DIGIT_ERR "argument may only contain numbers."
+# define ALNUM_ERR "argument may only contain letters and numbers."
 
 class PhoneBook {
 	private:
