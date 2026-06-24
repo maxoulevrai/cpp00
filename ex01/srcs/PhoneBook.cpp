@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:02:53 by root              #+#    #+#             */
-/*   Updated: 2026/06/05 01:27:38 by root             ###   ########.fr       */
+/*   Updated: 2026/06/23 23:10:59 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PhoneBook.hpp"
+#include "../includes/PhoneBook.hpp"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -48,7 +48,7 @@ bool PhoneBook::display_contact(int i) const {
 bool PhoneBook::display_phonebook() const {
 	int count = idx < 8 ? idx : 8;
 	if (count == 0) {
-		std::cout << "Phonebook is empty." << std::endl;
+		std::cerr << "Phonebook is empty." << std::endl;
 		return true ;
 	}
 	std::cout << std::setw(10) << "Index" << "|"

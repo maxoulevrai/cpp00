@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:11:22 by root              #+#    #+#             */
-/*   Updated: 2026/06/05 01:36:56 by root             ###   ########.fr       */
+/*   Updated: 2026/06/24 00:17:21 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
+#include "includes/PhoneBook.hpp"
 #include <cctype>
-#include "PhoneBook.hpp"
 
 static void	trim(std::string& str) {
 	size_t start = str.find_first_not_of(" \t\n\r");
@@ -25,21 +23,25 @@ static void	trim(std::string& str) {
 	str = str.substr(start, end - start + 1);
 }
 
-static std::string	getLine2(std::string prompt) {
+static std::string	getLine2(std::string prompt, int (*f)( int), std::string err_msg) {
 	std::string	tmp;
 
 	while (true) {
 		std::cout << prompt;
 		if (!std::getline(std::cin, tmp))
 			return std::string();
+		else if (std::cin.eof()) {
+			std::cout << "eof: exiting program.";
+			exit (0);
+		}
 		trim(tmp);
 		if (tmp.empty()) {
-			std::cout << "Input cannot be empty" << std::endl;
+			std::cerr << "Error: Input cannot be empty" << std::endl;
 			continue;
 		}
 		for (size_t i = 0; i < tmp.size(); ++i) {
-			if (!std::isalnum(static_cast<unsigned char>(tmp[i]))) {
-				std::cout << "Argument must be alphanumerical" << std::endl;
+			if (!f(static_cast<unsigned char>(tmp[i]))) {
+				std::cerr << "Error: " << err_msg << std::endl;
 				tmp.clear();
 				break;
 			}
@@ -49,38 +51,56 @@ static std::string	getLine2(std::string prompt) {
 	}
 }
 
-bool	parseContact(PhoneBook& phone) {
+static bool	parseContact(PhoneBook& phone) {
 	Contact		newContact;
 	std::string tmp;
 
-	tmp = getLine2("First name: ");
+	tmp = getLine2("First name: ", std::isalpha, 
+			"argument may only contain letters.");
 	if (tmp.empty())
-		return -1;
+		return true;
 	newContact.set_first_name(tmp);
 
-	tmp = getLine2("Last name: ");
+	tmp = getLine2("Last name: ", std::isalpha,
+			"argument may only contain letters.");
 	if (tmp.empty())
-		return -1;
+		return true;
 	newContact.set_last_name(tmp);
 
-	tmp = getLine2("Nickname: ");
+	tmp = getLine2("Nickname: ", std::isalnum, 
+			"argument may only contain letters and numbers.");
 	if (tmp.empty())
-		return -1;
+		return true;
 	newContact.set_nickname(tmp);
 
-	tmp = getLine2("Number: ");
+	tmp = getLine2("Number: ", std::isdigit, 
+			"argument may only contain numbers.");
 	if (tmp.empty())
-		return -1;
+		return true;
 	newContact.set_number(tmp);
 
-	tmp = getLine2("Secret: ");
+	tmp = getLine2("Secret: ", std::isalnum, 
+			"argument may only contain letters and numbers.");
 	if (tmp.empty())
-		return -1;
+		return true;
 	newContact.set_secret(tmp);
 
 	phone.add_contact(newContact);
-	return 0;
+	return false;
 }
+
+static int	parseIdx(void) {
+	while (true) {
+		std::string idxs = getLine2("Enter index to display: ", std::isdigit,  
+				"index may only take numbers as argument");
+		if (idxs.empty()) 
+			return (-1);
+		trim(idxs);
+		int i = atoi(idxs.c_str());
+		return (i);
+	}
+}
+
 
 int	main()
 {
@@ -94,24 +114,15 @@ int	main()
 		trim(cmd);
 		if (cmd == "EXIT")
 			break;
-		else if (cmd == "ADD")
-		{
-			if (parseContact(phone) == -1)
+		else if (cmd == "ADD") {
+			if (!parseContact(phone))
 				continue;
 		}
-		else if (cmd == "SEARCH")
-		{
+		else if (cmd == "SEARCH") {
 			if (phone.display_phonebook() == true)
 				continue;
 			while (true) {
-			std::string idxs;
-			std::cout << "Enter index to display: ";
-			if (!std::getline(std::cin, idxs))
-				break;
-			trim(idxs);
-			if (idxs.empty())
-				continue;
-			int i = std::atoi(idxs.c_str());
+			int i = parseIdx();
 			if (phone.display_contact(i) == true)
 				break ;
 			}
@@ -119,8 +130,6 @@ int	main()
 	}
 	return (0);
 }
-
-
 
 	// try {
 	// 	int i = std::stoi(idxs);

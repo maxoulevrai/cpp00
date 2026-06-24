@@ -4,7 +4,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -g -std=c++98
 INC_DIR = includes
 
-SRCS = main.cpp srcs/Contact.cpp srcs/PhoneBook.cpp
+SRCS = main.cpp $(wildcard srcs/*.cpp)
 OBJS = $(SRCS:%.cpp=build/%.o)
 
 RED     = \e[31m

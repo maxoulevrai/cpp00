@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maleca <maleca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:48:02 by root              #+#    #+#             */
-/*   Updated: 2026/06/05 01:25:07 by root             ###   ########.fr       */
+/*   Updated: 2026/06/23 22:05:33 by maleca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define PHONEBOOK_HPP
 
 #include "Contact.hpp"
+
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <cstdlib>
 
 class PhoneBook {
 	private:
